@@ -1,64 +1,91 @@
-module alu(A,B,ALUControl,Result,Z,N,V,C);
-    // declaring inputs
-    input [31:0] A,B;  // 32 bits variable
-    input [2:0] ALUControl;
+module ALU(A,B,Result,ALUControl,OverFlow,Carry,Zero,Negative);
 
-    // declaring outputs
-    output [31:0] Result;
-    output [31:0] Z,N,V,C;
+    input [31:0]A,B;
+    input [2:0]ALUControl;
+    output Carry,OverFlow,Zero,Negative;
+    output [31:0]Result;
 
-    // declaring interim wires
-    wire [31:0] a_and_b;
-    wire [31:0] a_or_b;
-    wire [31:0] not_b;
+    wire Cout;
+    wire [31:0]Sum;
 
-    wire [31:0] mux_1;
+    assign {Cout,Sum} = (ALUControl[0] == 1'b0) ? A + B :
+                                          (A + ((~B)+1)) ;
+    assign Result = (ALUControl == 3'b000) ? Sum :
+                    (ALUControl == 3'b001) ? Sum :
+                    (ALUControl == 3'b010) ? A & B :
+                    (ALUControl == 3'b011) ? A | B :
+                    (ALUControl == 3'b101) ? {{31{1'b0}},(Sum[31])} : {32{1'b0}};
+    
+    assign OverFlow = ((Sum[31] ^ A[31]) & 
+                      (~(ALUControl[0] ^ B[31] ^ A[31])) &
+                      (~ALUControl[1]));
+    assign Carry = ((~ALUControl[1]) & Cout);
+    assign Zero = &(~Result);
+    assign Negative = Result[31];
 
-    wire [31:0] sum;
+endmodule
 
-    wire [31:0] mux_2;
+// module ALU(A,B,ALUControl,Result,Z,N,V,C);
+//     // declaring inputs
+//     input [31:0] A,B;  // 32 bits variable
+//     input [2:0] ALUControl;
 
-    wire [31:0] slt;
+//     // declaring outputs
+//     output [31:0] Result;
+//     output [31:0] Z,N,V,C;
 
-    wire cout;
+//     // declaring interim wires
+//     wire [31:0] a_and_b;
+//     wire [31:0] a_or_b;
+//     wire [31:0] not_b;
 
-    // logic design
-    // AND Operation
-    assign a_and_b = A & B;
+//     wire [31:0] mux_1;
 
-    // OR Operation
-    assign a_or_b = A | B;
+//     wire [31:0] sum;
 
-    // NOT Operation
-    assign not_b = ~B;
+//     wire [31:0] mux_2;
 
-    // Ternary Operator
-    assign mux_1 = (ALUControl[0] == 1'b0) ? B : not_b;
+//     wire [31:0] slt;
 
-    // Addition / Subtraction Operation
-    assign {cout,sum} = A + mux_1 + ALUControl[0];
+//     wire cout;
 
-    // Zero Extension
-    assign slt = (31'b0000000000000000000000000000000,sum[31]);
+//     // logic design
+//     // AND Operation
+//     assign a_and_b = A & B;
 
-    // Designing 4by1 Mux
-    assign mux_2 = (ALUControl[2:0] == 3'b000) ? sum :              //if
-                   (ALUControl[2:0] == 3'b001) ? sum :              //else if
-                   (ALUControl[2:0] == 3'b010) ? a_and_b :          //else if
-                   (ALUControl[2:0] == 3'b011) ? a_or_b :           //else if 
-                   (ALUControl[2:0] == 3'b101) ? slt : 31'h00000000;  //else if //else 
+//     // OR Operation
+//     assign a_or_b = A | B;
 
-    // Result
-    assign Result = mux_2;
+//     // NOT Operation
+//     assign not_b = ~B;
 
-    // flags Assignment
-    assign Z = &(~Result);  // zero flag
+//     // Ternary Operator
+//     assign mux_1 = (ALUControl[0] == 1'b0) ? B : not_b;
 
-    assign N = Result[31];  // first digit is zero or one tell the number is -ve or +ve
+//     // Addition / Subtraction Operation
+//     assign {cout,sum} = A + mux_1 + ALUControl[0];
 
-    assign C = cout & (~ALUControl[1]);  // carru flag
+//     // Zero Extension
+//     assign slt = {31'b0000000000000000000000000000000,sum[31]};
 
-    assign V = (~ALUControl[1]) & (A[31] ^ Sum[31]) & (~(ALUControl[31] ^ A[31] ^ B[31]));
+//     // Designing 4by1 Mux
+//     assign mux_2 = (ALUControl[2:0] == 3'b000) ? sum :              //if
+//                    (ALUControl[2:0] == 3'b001) ? sum :              //else if
+//                    (ALUControl[2:0] == 3'b010) ? a_and_b :          //else if
+//                    (ALUControl[2:0] == 3'b011) ? a_or_b :           //else if 
+//                    (ALUControl[2:0] == 3'b101) ? slt : 31'h00000000;  //else if //else 
 
-endmodule;  
+//     // Result
+//     assign Result = mux_2;
+
+//     // flags Assignment
+//     assign Z = &(~Result);  // zero flag
+
+//     assign N = Result[31];  // first digit is zero or one tell the number is -ve or +ve
+
+//     assign C = cout & (~ALUControl[1]);  // carru flag
+
+//     assign V = ((~ALUControl[1]) & (A[31] ^ Sum[31]) & (~(ALUControl[0] ^ A[31] ^ B[31])));
+
+// endmodule;  
 

@@ -1,4 +1,4 @@
-module Instr_Mem (A,rst,RD);
+module Instruction_Memory (rst,A,RD);
 
    input [31:0] A;
    input rst;
@@ -10,5 +10,10 @@ module Instr_Mem (A,rst,RD);
    // Mem[A];   // giving instruction at the location A
 
    assign RD = (rst == 1'b0) ? 32'h00000000 : Mem[A[31:2]];
+
+   initial begin
+      Mem[0] = 32'hFFC4A303;
+      Mem[1] = 32'h00832383;
+   end
 
 endmodule

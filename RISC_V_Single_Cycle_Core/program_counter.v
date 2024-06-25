@@ -1,6 +1,6 @@
-module P_C (PC_NEXT,PC,rst,clk);
+module PC_Module (clk,rst,PC,PC_Next);
 
-    input [31:0] PC_NEXT;
+    input [31:0] PC_Next;
     input clk,rst;
 
     output reg [31:0] PC;   // reg considered PC a register
@@ -10,11 +10,11 @@ module P_C (PC_NEXT,PC,rst,clk);
 
     if (rst == 1'b0)
         begin
-            PC <= 32'00000000;
+            PC <= 32'h00000000;
         end
     else
         begin
-            PC <= PC_NEXT;  
+            PC <= PC_Next;  
         end
 
     end
