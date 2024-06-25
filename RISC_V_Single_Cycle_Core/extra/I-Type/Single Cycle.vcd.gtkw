@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Tue Jun 25 16:44:50 2024
+[*] Tue Jun 25 09:34:38 2024
 [*]
 [dumpfile] "C:\Users\91626\Desktop\Projects\RISC\RISC_V_Single_Cycle_Core\Single Cycle.vcd"
-[dumpfile_mtime] "Tue Jun 25 16:42:47 2024"
-[dumpfile_size] 4905
+[dumpfile_mtime] "Tue Jun 25 09:32:56 2024"
+[dumpfile_size] 4297
 [savefile] "C:\Users\91626\Desktop\Projects\RISC\RISC_V_Single_Cycle_Core\Single Cycle.vcd.gtkw"
 [timestart] 0
 [size] 861 784
 [pos] -1 -1
-*-6.331266 78 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-6.777607 71 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] Single_Cycle_Top_Tb.
 [treeopen] Single_Cycle_Top_Tb.Single_Cycle_Top.
 [sst_width] 197
