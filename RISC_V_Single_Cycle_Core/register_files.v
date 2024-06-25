@@ -21,9 +21,8 @@ module Register_File(clk,rst,WE3,WD3,A1,A2,A3,RD1,RD2);
         // Register[6] = 32'h00000040;
         // Register[11] = 32'h00000028;
         // Register[12] = 32'h00000030;
-        Register[5] = 32'h00000006;
-        Register[6] = 32'h0000000A;
-        Register[4] = 32'h0000000E;
+        Register[5] = 32'h00000005;
+        Register[6] = 32'h00000004;
     end
 
 endmodule

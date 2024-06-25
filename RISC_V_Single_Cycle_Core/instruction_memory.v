@@ -12,12 +12,16 @@ module Instruction_Memory (rst,A,RD);
    assign RD = (rst == 1'b0) ? 32'h00000000 : Mem[A[31:2]];
 
    initial begin
-      //Mem[0] = 32'hFFC4A303;
-      //Mem[1] = 32'h00832383;
-      // Mem[0] = 32'h0064A423;
-      // Mem[1] = 32'h00B62423;
-      Mem[0] = 32'h0062E233;
-      // Mem[1] = 32'h00B62423;
+      $readmemh("memfile.hex",Mem);
    end
+
+   // initial begin
+   //    //Mem[0] = 32'hFFC4A303;
+   //    //Mem[1] = 32'h00832383;
+   //    // Mem[0] = 32'h0064A423;
+   //    // Mem[1] = 32'h00B62423;
+   //    Mem[0] = 32'h0062E233;
+   //    // Mem[1] = 32'h00B62423;
+   // end
 
 endmodule
